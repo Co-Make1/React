@@ -1,4 +1,4 @@
-import axiosWithAuth from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 export const START_GET_ISSUE = "";
 export const SUCCESS_GET_ISSUE = "";
@@ -17,7 +17,6 @@ export const SUCCESS_UPDATE_ISSUE = '';
 export const FAILURE_UPDATE_ISSUE = ""
 
 
-export const 
 
 export const getIssue = () => dispatch => {
     dispatch({type:START_GET_ISSUE})
@@ -30,7 +29,7 @@ export const getIssue = () => dispatch => {
     })
     .catch ( error => {
         console.log("error fetching data from api", error)
-        dispatch({type:FAILURE_GET_ISSUE, payload:err})
+        dispatch({type:FAILURE_GET_ISSUE, payload:error})
     })
 
     
@@ -47,7 +46,7 @@ export const postIssue = () => dispatch => {
     })
     .catch ( error => {
         console.log("error in posting data to the api", error)
-        dispatch({type:FAILURE_POST_ISSUE, payload:err})
+        dispatch({type:FAILURE_POST_ISSUE, payload:error})
     })
 
 
@@ -66,7 +65,7 @@ export const deleteIssue = () => dispatch => {
     })
     .catch ( error => {
         console.log(error)
-        dispatch({type:FAILURE_DELETE_ISSUE, payload:err})
+        dispatch({type:FAILURE_DELETE_ISSUE, payload:error})
     })
 
 
@@ -84,7 +83,7 @@ export const updateIssue = () => dispatch => {
     })
     .catch ( error => {
         console.log(error)
-        dispatch({type:FAILURE_UPDATE_ISSUE, payload:err})
+        dispatch({type:FAILURE_UPDATE_ISSUE, payload:error})
     })
 
 

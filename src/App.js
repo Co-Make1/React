@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import IssueBoardPage from "./pages/IssueBoardPage";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
+import PrivateRoute from "./components/PrivateRoute";
 
 import "./App.css";
 
@@ -15,27 +16,38 @@ function App() {
             <Nav />
 
             <Switch>
+
+                <PrivateRoute exact
+                    path="/issueboard"
+                    component={IssueBoardPage}
+                />
                 <Route
                     exact
                     path="/"
-                    render={props => <LoginForm {...props} />}
+                    component={LoginForm}
                 />
                 <Route
                     path="/about"
-                    render={props => <AboutPage {...props} />}
+                    component={AboutPage}
                 />
-                <Route
-                    path="/issueboard"
-                    render={props => <IssueBoardPage {...props} />}
-                />
+                
                 <Route
                     path="/login"
-                    render={props => <LoginForm {...props} />}
+                    component={LoginForm }
                 />
                 <Route
                     path="/signup"
-                    render={props => <SignUpForm {...props} />}
+                    component={SignUpForm}
                 />
+                <Route 
+                    component= {LoginForm} />
+
+                <Route 
+                    component= {AboutPage} />
+
+                <Route 
+                    component= {SignUpForm} />
+
             </Switch>
         </div>
     );
