@@ -31,8 +31,12 @@ const StyledNav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 10%;
+    padding: 0 10%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     .logo {
         width: 25px;
         height: 25px;
@@ -43,6 +47,23 @@ const StyledNav = styled.nav`
         display: flex;
         width: 30%;
         justify-content: space-between;
+
+        a {
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            line-height: 3.5rem;
+        }
+    }
+
+    .selected::after {
+        content: "";
+        width: 100px;
+        height: 5px;
+        background-color: red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 `;
 
