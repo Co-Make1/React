@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-const LoginForm = ({ errors, status, touched, ...props }) => {
+const LoginForm = ({errors, status, touched, ...props }) => {
     // console.log('errors: ', errors, 'status: ', status, 'touched: ', touched)
 
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
 
     // console.log('user: ', user)
     // console.log(props)
 
-    useEffect(() => {
-        status && setUsers([...users, status]);
-    }, [status]);
+    // useEffect(() => {
+    //     status && setUsers([...users, status]);
+    // }, [status]);
 
-    console.log("status: ", status);
-    console.log("user: ", users);
+    // console.log("status: ", status);
+    // console.log("user: ", users);
+
 
     return (
         <StyledLoginContainer>
             <StyledForm>
-                <Form>
+                <Form >
                     <div className="input-container">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="username">username</label>
                         <Field
-                            type="email"
-                            name="email"
-                            id="email"
+                            type="username"
+                            name="username"
+                            id="username"
                             placeholder="type your email"
                         />
                         {touched.email && errors.email && (
@@ -112,36 +113,39 @@ const StyledForm = styled.div`
 `;
 
 const withFormikObj = {
-    mapPropsToValues: ({ email, password, tos }) => ({
-        email: email || "",
+    mapPropsToValues: ({ username, password, tos }) => ({
+        username: username || "",
         password: password || ""
     }),
     validationSchema: yup.object().shape({
-        email: yup
+        username: yup
             .string()
-            .email("Email not valid")
-            .required("Email is required"),
+            // .email("Email not valid")
+            .required("Username is required"),
         password: yup
             .string()
-            .min(10, "Password must be 10 characters or longer")
+            // .min(10, "Password must be 10 characters or longer")
             .required("Password is required")
-            .matches(
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
-            )
+            // .matches(
+            //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+            // )
     }),
-    handleSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
-        axios
-            .post("https://reqres.in/api/users/", values)
+        axiosWithAuth()
+            .post("/auth/login", values)
             .then(response => {
-                console.log("response", response);
-                setStatus(response.data);
-                resetForm();
-                setSubmitting(false);
+            localStorage.setItem('token', response.data.token);
+            props.history.push('/issueboard')
             })
-            .catch(err => console.log(err.response));
+            .catch(err => {
+                localStorage.removeItem('token')
+                console.log('invalid login: ', err)
+            });
     }
+
 };
 
 export default withFormik(withFormikObj)(LoginForm);
+
