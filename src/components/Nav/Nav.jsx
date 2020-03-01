@@ -7,7 +7,7 @@ const Nav = () => {
         <StyledNav>
             <div className="logo"></div>
             <div className="nav-links">
-                <NavLink to="/" activeClassName="selected">
+                <NavLink to="/" activeClassName="selected" exact>
                     Home
                 </NavLink>
                 <NavLink to="/about" activeClassName="selected">
@@ -58,9 +58,9 @@ const StyledNav = styled.nav`
 
     .selected::after {
         content: "";
-        width: 100px;
+        width: 100%;
         height: 5px;
-        background-color: red;
+        background-color: blue;
         position: absolute;
         bottom: 0;
         left: 0;
