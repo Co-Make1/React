@@ -16,38 +16,21 @@ function App() {
             <Nav />
 
             <Switch>
-
-                <PrivateRoute exact
-                    path="/issueboard"
+                <PrivateRoute
+                    exact
+                    path="/issueboard/:id"
                     component={IssueBoardPage}
                 />
-                <Route
-                    exact
-                    path="/"
-                    component={LoginForm}
-                />
-                <Route
-                    path="/about"
-                    component={AboutPage}
-                />
-                
-                <Route
-                    path="/login"
-                    component={LoginForm }
-                />
-                <Route
-                    path="/signup"
-                    component={SignUpForm}
-                />
-                <Route 
-                    component= {LoginForm} />
+                <Route exact path="/" component={LoginForm} />
+                <Route path="/about" component={AboutPage} />
 
-                <Route 
-                    component= {AboutPage} />
+                <Route path="/login" component={LoginForm} />
+                <Route path="/signup" component={SignUpForm} />
+                <Route component={LoginForm} />
 
-                <Route 
-                    component= {SignUpForm} />
+                <Route component={AboutPage} />
 
+                <Route component={SignUpForm} />
             </Switch>
         </div>
     );

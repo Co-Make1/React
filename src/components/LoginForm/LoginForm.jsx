@@ -148,8 +148,9 @@ const withFormikObj = {
         axiosWithAuth()
             .post("/auth/login", values)
             .then(response => {
+                console.log("response: ", response);
                 localStorage.setItem("token", response.data.token);
-                props.history.push("/issueboard");
+                props.history.push(`/issueboard/${response.data.user.id}`);
             })
             .catch(err => {
                 localStorage.removeItem("token");
