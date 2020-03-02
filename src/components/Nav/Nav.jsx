@@ -2,7 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const Nav = () => {
+const Nav = props => {
+    console.log("nav props:  ", props);
+
     return (
         <StyledNav>
             <div className="logo"></div>
@@ -13,7 +15,14 @@ const Nav = () => {
                 <NavLink to="/about" activeClassName="selected">
                     About
                 </NavLink>
-                <NavLink to="/issueboard" activeClassName="selected">
+                <NavLink
+                    to={
+                        window.localStorage.getItem("token")
+                            ? `/issueboard/${props.match.params.id}`
+                            : `/issueboard`
+                    }
+                    activeClassName="selected"
+                >
                     Issue Board
                 </NavLink>
                 <NavLink to="/login" activeClassName="selected">
@@ -37,6 +46,7 @@ const StyledNav = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
+    background-color: white;
     .logo {
         width: 25px;
         height: 25px;
