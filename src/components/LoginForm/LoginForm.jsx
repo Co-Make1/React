@@ -4,7 +4,7 @@ import { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-const LoginForm = ({ errors, status, touched, ...props }) => {
+const LoginForm = ({ errors, status, touched, setUser, ...props }) => {
     // console.log('errors: ', errors, 'status: ', status, 'touched: ', touched)
 
     // const [users, setUsers] = useState([]);
@@ -18,6 +18,9 @@ const LoginForm = ({ errors, status, touched, ...props }) => {
 
     // console.log("status: ", status);
     // console.log("user: ", users);
+
+    console.log("login form rendered");
+    // console.log(props);
 
     return (
         <StyledLoginContainer>
@@ -143,14 +146,20 @@ const withFormikObj = {
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
         // )
     }),
-    handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
+    handleSubmit: (
+        values,
+        { props: { setUser, history }, resetForm, setSubmitting, setStatus }
+    ) => {
         console.log("submitting!", values);
+        console.log("history", history);
+        console.log("setUser", setUser);
         axiosWithAuth()
             .post("/auth/login", values)
             .then(response => {
                 console.log("response: ", response);
                 localStorage.setItem("token", response.data.token);
-                props.history.push(`/issueboard/${response.data.user.id}`);
+                setUser(response.data.user);
+                history.push(`/issueboard/${response.data.user.id}`);
             })
             .catch(err => {
                 localStorage.removeItem("token");

@@ -5,6 +5,11 @@ import styled from "styled-components";
 const Nav = props => {
     console.log("nav props:  ", props);
 
+    const Logout = () => {
+        localStorage.removeItem("token");
+        // props.history.push("/login");
+    };
+
     return (
         <StyledNav>
             <div className="logo"></div>
@@ -18,15 +23,21 @@ const Nav = props => {
                 <NavLink
                     to={
                         window.localStorage.getItem("token")
-                            ? `/issueboard/${props.match.params.id}`
-                            : `/issueboard`
+                            ? `/issueboard/${props.user.id}`
+                            : `/issueboard/:id`
                     }
                     activeClassName="selected"
                 >
                     Issue Board
                 </NavLink>
-                <NavLink to="/login" activeClassName="selected">
-                    Login
+                <NavLink
+                    to="/login"
+                    activeClassName="selected"
+                    onClick={Logout}
+                >
+                    {window.localStorage.getItem("token") !== null
+                        ? "Logout"
+                        : "Login"}
                 </NavLink>
                 <NavLink to="/signup" activeClassName="selected">
                     Sign Up
@@ -47,6 +58,7 @@ const StyledNav = styled.nav`
     left: 0;
     width: 100%;
     background-color: white;
+    z-index: 999;
     .logo {
         width: 25px;
         height: 25px;
