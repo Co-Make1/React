@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { connect } from 'react-redux';
 import { userLogin } from "../actions/actionsIndex";
 
-const LoginForm = ({ errors, status, touched, ...props }) => {
+const LoginForm = ({ errors, status, touched, setUser, ...props }) => {
     // console.log('errors: ', errors, 'status: ', status, 'touched: ', touched)
 
     // const [users, setUsers] = useState([]);
@@ -19,6 +19,9 @@ const LoginForm = ({ errors, status, touched, ...props }) => {
 
     // console.log("status: ", status);
     // console.log("user: ", users);
+
+    console.log("login form rendered");
+    // console.log(props);
 
     return (
         <StyledLoginContainer>
@@ -144,7 +147,10 @@ const withFormikObj = withFormik({
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
         // )
     }),
-    handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
+    handleSubmit: (
+        values,
+        { props, resetForm, setSubmitting, setStatus }
+    ) => {
         console.log("submitting!", values);
         props.userLogin(values);
         resetForm();

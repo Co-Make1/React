@@ -13,11 +13,11 @@ const IssueCard = props => {
                     <h5>{props.hazard_level}</h5>
                 </div>
                 <div className="location">
-                    <p>Location: </p>
+                    <h5>Location: </h5>
                     <p>{`${props.city}, ${props.state}`}</p>
                 </div>
                 <div className="issue-description">
-                    <p>Description:</p>
+                    <h5>Description:</h5>
                     <p>{props.issue_description}</p>
                 </div>
                 <div className="upvotes">
@@ -34,6 +34,8 @@ const StyledCard = styled.div`
     border-radius: 20px;
     box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
     transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
+    width: 100%;
+    position: relative;
     /* transition: all 300ms cubic-bezier(0.68, -0.55, 0.27, 01.55); */
     cursor: pointer;
 
@@ -47,14 +49,18 @@ const StyledCard = styled.div`
 
         p {
             margin: 0;
+            color: rgba(0, 0, 0, 0.6);
+        }
+        h4,
+        h5 {
+            margin: 0;
         }
 
         .top-text {
             display: flex;
             justify-content: space-between;
-            h4,
-            h5 {
-                margin: 0;
+            h4 {
+                font-family: "Permanent Marker";
             }
 
             h5 {
@@ -67,19 +73,29 @@ const StyledCard = styled.div`
         .location {
             display: flex;
             justify-content: space-between;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         .issue-description {
             margin-top: 0.5rem;
-            p {
+
+            p,
+            h5 {
                 margin: 0;
+            }
+
+            p {
+                margin-top: 0.5rem;
+                margin-bottom: 1rem;
             }
         }
 
         .upvotes {
             display: flex;
             justify-content: flex-end;
+            bottom: 1rem;
+            right: 1.5rem;
+            position: absolute;
 
             p {
                 margin-right: 1rem;
@@ -89,7 +105,7 @@ const StyledCard = styled.div`
 
     &:hover {
         /* transform: translateY(-5px); */
-        transform: scale(1.1, 1.1);
+        transform: scale(1.06, 1.06);
         transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
         /* transition: all 300ms cubic-bezier(0.68, -0.55, 0.27, 01.55); */
         box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
