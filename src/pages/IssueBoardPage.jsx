@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
 import IssueCard from "../components/IssueCard/IssueCard";
 import AddNewIssue from "../components/AddNewIssue/AddNewIssue";
+import { axiosWithAuth } from "../components/utils/axiosWithAuth";
 
 const IssueBoardPage = props => {
     console.log("issue board page props", props);
+    const [issues, setIssues] = useState([]);
 
     const DUMMY_ISSUES = [
         {
@@ -76,12 +78,12 @@ const IssueBoardPage = props => {
     ];
 
     useEffect(() => {
-        // axios
-        //     .get(
-        //         `https://co-make-backend.herokuapp.com/api/users/${props.match.params.id}/issues`
-        //     )
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err));
+        axiosWithAuth()
+            .get(
+                `https://co-make-backend.herokuapp.com/api/users/${props.match.params.id}/issues`
+            )
+            .then(res => console.log("res: ", res))
+            .catch(err => console.log(err));
     }, []);
 
     return (

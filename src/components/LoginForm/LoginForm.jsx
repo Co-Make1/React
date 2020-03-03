@@ -2,26 +2,25 @@ import React from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { userLogin } from "../actions/actionsIndex";
+import { useEffect } from "react";
 
-const LoginForm = ({ errors, status, touched, setUser, ...props }) => {
-    // console.log('errors: ', errors, 'status: ', status, 'touched: ', touched)
-
-    // const [users, setUsers] = useState([]);
-
-    // console.log('user: ', user)
-    // console.log(props)
-
-    // useEffect(() => {
-    //     status && setUsers([...users, status]);
-    // }, [status]);
-
-    // console.log("status: ", status);
-    // console.log("user: ", users);
+const LoginForm = ({
+    errors,
+    status,
+    touched,
+    setUser,
+    isLoggedIn,
+    ...props
+}) => {
+    useEffect(() => {
+        if (isLoggedIn) {
+            props.history.push(`/issueboard/${localStorage.getItem("id")}`);
+        }
+    }, [isLoggedIn]);
 
     console.log("login form rendered");
-    // console.log(props);
 
     return (
         <StyledLoginContainer>
@@ -147,15 +146,15 @@ const withFormikObj = withFormik({
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
         // )
     }),
-    handleSubmit: (
-        values,
-        { props, resetForm, setSubmitting, setStatus }
-    ) => {
+    handleSubmit: (values, { props, setSubmitting }) => {
         console.log("submitting!", values);
         props.userLogin(values);
-        resetForm();
-        props.history.push(`/issueboard/${values.data.user.id}`);
+        setSubmitting(false);
     }
 })(LoginForm);
 
-export default connect(null, {userLogin})(withFormikObj);
+const mapStateToProps = state => ({
+    isLoggedIn: state.isLoggedIn
+});
+
+export default connect(mapStateToProps, { userLogin })(withFormikObj);

@@ -7,6 +7,7 @@ const Nav = props => {
 
     const Logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("id");
         // props.history.push("/login");
     };
 
@@ -23,7 +24,7 @@ const Nav = props => {
                 <NavLink
                     to={
                         window.localStorage.getItem("token")
-                            ? `/issueboard/${props.user.id}`
+                            ? `/issueboard/${localStorage.getItem("id")}`
                             : `/issueboard/:id`
                     }
                     activeClassName="selected"
@@ -39,9 +40,11 @@ const Nav = props => {
                         ? "Logout"
                         : "Login"}
                 </NavLink>
-                <NavLink to="/signup" activeClassName="selected">
-                    Sign Up
-                </NavLink>
+                {window.localStorage.getItem("token") !== null ? null : (
+                    <NavLink to="/signup" activeClassName="selected">
+                        Sign Up
+                    </NavLink>
+                )}
             </div>
         </StyledNav>
     );
