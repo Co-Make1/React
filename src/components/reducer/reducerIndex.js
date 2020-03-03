@@ -1,4 +1,13 @@
 import {
+
+    START_USER_LOGIN,
+    SUCCESS_USER_LOGIN,
+    FAILURE_USER_LOGIN,
+
+    START_USER_REGISTER,
+    SUCCESS_USER_REGISTER,
+    FAILURE_USER_REGISTER,
+
     START_GET_ISSUE,
     SUCCESS_GET_ISSUE,
     FAILURE_GET_ISSUE,
@@ -17,15 +26,66 @@ import {
 } from "../actions/actionsIndex";
 
 const initialState = {
-    getIssue: false,
-    postIssue: false,
-    deleteIssue: false,
-    updateIssue: false
+    isLoggedIn: false,
+    isFetching: false,
+    error: '',
+   
+    // getIssue: false,
+    // postIssue: false,
+    // deleteIssue: false,
+    // updateIssue: false
 };
 
 export const AppReducer = (state = initialState, action) => {
     console.log(state);
     switch (action.type) {
+        case START_USER_LOGIN: 
+        return {
+            ...state,
+            isFetching: true,
+            isLoggedIn:false,
+            error: null
+
+        }
+        case SUCCESS_USER_LOGIN: 
+        return {
+            ...state,
+            isFetching: false,
+            isLoggedIn:true,
+            user:action.payload,
+            error: null
+        }
+
+        case FAILURE_USER_LOGIN:
+            return {
+                ...state,
+                isFetching:false,
+                isLoggedIn: false,
+                error: action.payload
+            }
+
+            case START_USER_REGISTER: 
+            return {
+                ...state,
+                isFetching:true,
+                error: null
+            }
+
+            case SUCCESS_USER_REGISTER:
+            return {
+                ...state,
+                isFetching: false,
+                user: action.payload,
+                error: null
+            }
+            
+            case FAILURE_USER_REGISTER: 
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+
         case START_GET_ISSUE:
             return {
                 ...state,

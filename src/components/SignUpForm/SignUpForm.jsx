@@ -2,7 +2,8 @@ import React from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { connect } from "react-redux";
+import { userSignup } from "../actions/actionsIndex";
 
 import { StyledLoginContainer, StyledForm } from "../LoginForm/LoginForm";
 
@@ -37,17 +38,17 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
                         )}
                     </div>
                     <div className="input-container">
-                        <label htmlFor="passwordConfirm">
-                            Confirm Password
+                        <label htmlFor="emailConfirm">
+                            Email
                         </label>
                         <Field
-                            type="password"
-                            name="passwordConfirm"
-                            placeholder="confirm your password"
-                            id="passwordConfirm"
+                            type="email"
+                            name="email"
+                            placeholder="email"
+                            id="email"
                         />
-                        {touched.passwordConfirm && errors.passwordConfirm && (
-                            <p className="error">{errors.passwordConfirm}</p>
+                        {touched.email && errors.email && (
+                            <p className="error">{errors.email}</p>
                         )}
                     </div>
                     <div className="input-container">
@@ -95,11 +96,11 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
     );
 };
 
-const withFormikObj = {
-    mapPropsToValues: ({ username, password, passwordConfirm, city }) => ({
+const withFormikObj = withFormik( {
+    mapPropsToValues: ({ username, password, email, city }) => ({
         username: username || "",
         password: password || "",
-        passwordConfirm: passwordConfirm || "",
+        email: email || "",
         city: city || ""
     }),
     validationSchema: yup.object().shape({
@@ -115,11 +116,11 @@ const withFormikObj = {
         //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
         // )
-        passwordConfirm: yup
-            .string()
-            .oneOf([yup.ref("password"), null], `Passwords don't match`)
-            .required("Password confirmation is required"),
-        city: yup.string().required("City is required"),
+        // passwordConfirm: yup
+        //     .string()
+        //     .oneOf([yup.ref("password"), null], `Passwords don't match`)
+        //     .required("Password confirmation is required"),
+        // city: yup.string().required("City is required"),
         zip_code: yup
             .string()
             .matches(/^[0-9]*$/, "Zip code must be numbers only")
@@ -132,16 +133,10 @@ const withFormikObj = {
     }),
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
-        axiosWithAuth()
-            .post("/auth/login", values)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(err => {
-                localStorage.removeItem("token");
-                console.log("invalid login: ", err);
-            });
-    }
-};
+        props.userSignup(values);
+        props.history.push('/login');
+        resetForm();
+ }
+})(SignUpForm);
 
-export default withFormik(withFormikObj)(SignUpForm);
+export default connect(null, { userSignup })(withFormikObj);

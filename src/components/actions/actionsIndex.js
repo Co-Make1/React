@@ -1,5 +1,48 @@
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
+export const START_USER_LOGIN = "START_USER_LOGIN";
+export const SUCCESS_USER_LOGIN = "SUCCESS_USER_LOGIN";
+export const FAILURE_USER_LOGIN = "FAILURE_USER_LOGIN";
+
+export const userLogin = user => dispatch => {
+    dispatch({ type: START_USER_LOGIN });
+
+    axiosWithAuth()
+        .post("/auth/login", user)
+        .then(response => {
+            dispatch({ type: SUCCESS_USER_LOGIN, payload: response.data });
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem('id', response.data.user.id)
+            console.log("response: ", response);
+        })
+        .catch(err => {
+            console.log(err);
+            localStorage.removeItem("token")
+            dispatch({ type: FAILURE_USER_LOGIN, payload:err });
+        });
+};
+
+export const START_USER_REGISTER = "START_USER_REGISTER";
+export const SUCCESS_USER_REGISTER = "SUCCESS_USER_REGISTER";
+export const FAILURE_USER_REGISTER = "FAILURE_USER_REGISTER";
+
+export const userSignup = values => dispatch => {
+    dispatch({ type: START_USER_REGISTER });
+
+    axiosWithAuth()
+        .post("/auth/register", values)
+        .then(response => {
+            dispatch({ type: SUCCESS_USER_REGISTER, payload:response.data});
+            console.log("response: ", response);
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({ type: FAILURE_USER_REGISTER, payload:err });
+        });
+};
+
+
+
 export const START_GET_ISSUE = "";
 export const SUCCESS_GET_ISSUE = "";
 export const FAILURE_GET_ISSUE = "";
