@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { connect } from 'react-redux';
+import { userLogin } from "../actions/actionsIndex";
 
 const LoginForm = ({ errors, status, touched, setUser, ...props }) => {
     // console.log('errors: ', errors, 'status: ', status, 'touched: ', touched)
@@ -127,7 +128,7 @@ export const StyledForm = styled.div`
     }
 `;
 
-const withFormikObj = {
+const withFormikObj = withFormik({
     mapPropsToValues: ({ username, password, tos }) => ({
         username: username || "",
         password: password || ""
@@ -148,24 +149,13 @@ const withFormikObj = {
     }),
     handleSubmit: (
         values,
-        { props: { setUser, history }, resetForm, setSubmitting, setStatus }
+        { props, resetForm, setSubmitting, setStatus }
     ) => {
         console.log("submitting!", values);
-        console.log("history", history);
-        console.log("setUser", setUser);
-        axiosWithAuth()
-            .post("/auth/login", values)
-            .then(response => {
-                console.log("response: ", response);
-                localStorage.setItem("token", response.data.token);
-                setUser(response.data.user);
-                history.push(`/issueboard/${response.data.user.id}`);
-            })
-            .catch(err => {
-                localStorage.removeItem("token");
-                console.log("invalid login: ", err);
-            });
+        props.userLogin(values);
+        resetForm();
+        props.history.push(`/issueboard/${values.data.user.id}`);
     }
-};
+})(LoginForm);
 
-export default withFormik(withFormikObj)(LoginForm);
+export default connect(null, {userLogin})(withFormikObj);
