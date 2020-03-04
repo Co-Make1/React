@@ -1,7 +1,6 @@
 import React from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { userSignup } from "../actions/actionsIndex";
 
@@ -38,9 +37,7 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
                         )}
                     </div>
                     <div className="input-container">
-                        <label htmlFor="emailConfirm">
-                            Email
-                        </label>
+                        <label htmlFor="emailConfirm">Email</label>
                         <Field
                             type="email"
                             name="email"
@@ -96,7 +93,7 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
     );
 };
 
-const withFormikObj = withFormik( {
+const withFormikObj = withFormik({
     mapPropsToValues: ({ username, password, email, city }) => ({
         username: username || "",
         password: password || "",
@@ -134,9 +131,9 @@ const withFormikObj = withFormik( {
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
         props.userSignup(values);
-        props.history.push('/login');
+        props.history.push("/login");
         resetForm();
- }
+    }
 })(SignUpForm);
 
 export default connect(null, { userSignup })(withFormikObj);

@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
 
 const IssueCard = props => {
-
-
     return (
         <StyledCard>
             <img src={props.photo} alt={props.issue} />
