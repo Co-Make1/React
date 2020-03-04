@@ -1,15 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { logOut } from '../actions/actionsIndex';
+import { connect } from "react-redux";
+
 
 const Nav = props => {
     console.log("nav props:  ", props);
 
-    const Logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("id");
+    // const Logout = () => {
+    //     localStorage.removeItem("token");
+    //     localStorage.removeItem("id");
         // props.history.push("/login");
-    };
+    // };
 
     return (
         <StyledNav>
@@ -31,15 +34,18 @@ const Nav = props => {
                 >
                     Issue Board
                 </NavLink>
+
                 <NavLink
                     to="/login"
                     activeClassName="selected"
-                    onClick={Logout}
+                    onClick={props.logOut}
                 >
                     {window.localStorage.getItem("token") !== null
                         ? "Logout"
                         : "Login"}
                 </NavLink>
+
+
                 {window.localStorage.getItem("token") !== null ? null : (
                     <NavLink to="/signup" activeClassName="selected">
                         Sign Up
@@ -92,4 +98,8 @@ const StyledNav = styled.nav`
     }
 `;
 
-export default Nav;
+const mapStateToProps = state => ({
+    isLoggedIn: state.isLoggedIn
+})
+
+export default connect(mapStateToProps, { logOut })(Nav);
