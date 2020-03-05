@@ -54,10 +54,11 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const LOGGED_IN = "LOGGED_IN";
 
 export const logOut = () => dispatch => {
-    dispatch({ type:LOGOUT_USER })
+    dispatch({ type: LOGOUT_USER });
 
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+
     localStorage.removeItem("username");
     localStorage.removeItem("state");
 }

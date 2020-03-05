@@ -11,6 +11,10 @@ import { connect } from "react-redux";
 import { loggedIn } from "./components/actions/actionsIndex";
 import "./App.css";
 
+// useEffect(() => {
+//     localStorage.getItem("token") ? isLoggedIn() : null;
+// }, []);
+
 function App() {
     return (
         <div className="App">

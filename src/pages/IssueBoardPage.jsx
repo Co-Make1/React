@@ -82,8 +82,9 @@ const IssueBoardPage = props => {
             .get(
                 `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
                     "id"
-                )}/issues`
+                )}`
             )
+
             .then(res => console.log("res: ", res))
             .catch(err => console.log(err));
     }, []);

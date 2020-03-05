@@ -120,6 +120,7 @@ const withFormikObj = withFormik({
     }),
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
+
         props.history.push(`/issueboard/${localStorage.getItem("id")}`);
     }
 })(AddNewIssueForm);
