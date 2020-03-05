@@ -44,12 +44,11 @@ export const userSignup = values => dispatch => {
 export const LOGOUT_USER = "LOGOUT_USER";
 
 export const logOut = () => dispatch => {
-    dispatch({ type:LOGOUT_USER })
+    dispatch({ type: LOGOUT_USER });
 
     localStorage.removeItem("token");
     localStorage.removeItem("id");
-}
-
+};
 
 export const START_GET_ISSUE = "";
 export const SUCCESS_GET_ISSUE = "";

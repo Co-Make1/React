@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Nav from "./components/Nav/Nav";
@@ -10,6 +10,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import AddNewIssueForm from "./components/AddNewIssue/AddNewIssueForm";
 
 import "./App.css";
+
+// useEffect(() => {
+//     localStorage.getItem("token") ? isLoggedIn() : null;
+// }, []);
 
 function App() {
     const [user, setUser] = useState({});
