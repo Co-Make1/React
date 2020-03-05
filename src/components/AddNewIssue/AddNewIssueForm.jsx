@@ -118,7 +118,7 @@ const withFormikObj = withFormik({
             .max(180, "180 characters maximum")
             .required("Description is required")
     }),
-    handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
+    handleSubmit: (values, { props }) => {
         console.log("submitting!", values);
 
         props.history.push(`/issueboard/${localStorage.getItem("id")}`);
