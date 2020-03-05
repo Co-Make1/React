@@ -1,33 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { logOut } from '../actions/actionsIndex';
+import { logOut } from "../actions/actionsIndex";
 import { connect } from "react-redux";
-
 
 const Nav = props => {
     console.log("nav props:  ", props);
 
-    // const Logout = () => {
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("id");
-        // props.history.push("/login");
-    // };
+    console.log("user id: ", localStorage.getItem("id"));
+    const userID = localStorage.getItem("id");
 
     return (
         <StyledNav>
             <div className="logo"></div>
             <div className="nav-links">
-                <NavLink to="/" activeClassName="selected" exact>
-                    Home
-                </NavLink>
-                <NavLink to="/about" activeClassName="selected">
-                    About
-                </NavLink>
                 <NavLink
                     to={
-                        window.localStorage.getItem("token")
-                            ? `/issueboard/${localStorage.getItem("id")}`
+                        props.isLoggedIn
+                            ? `/issueboard/${userID}`
                             : `/issueboard/:id`
                     }
                     activeClassName="selected"
@@ -40,17 +30,14 @@ const Nav = props => {
                     activeClassName="selected"
                     onClick={props.logOut}
                 >
-                    {window.localStorage.getItem("token") !== null
-                        ? "Logout"
-                        : "Login"}
+                    {!props.isLoggedIn ? "Login" : "Logout"}
                 </NavLink>
 
-
-                {window.localStorage.getItem("token") !== null ? null : (
+                {!props.isLoggedIn ? (
                     <NavLink to="/signup" activeClassName="selected">
                         Sign Up
                     </NavLink>
-                )}
+                ) : null}
             </div>
         </StyledNav>
     );
@@ -76,7 +63,7 @@ const StyledNav = styled.nav`
 
     .nav-links {
         display: flex;
-        width: 30%;
+        /* width: 30%; */
         justify-content: space-between;
 
         a {
@@ -84,6 +71,7 @@ const StyledNav = styled.nav`
             color: #333;
             position: relative;
             line-height: 3.5rem;
+            margin-left: 2.5rem;
         }
     }
 
@@ -100,6 +88,6 @@ const StyledNav = styled.nav`
 
 const mapStateToProps = state => ({
     isLoggedIn: state.isLoggedIn
-})
+});
 
 export default connect(mapStateToProps, { logOut })(Nav);

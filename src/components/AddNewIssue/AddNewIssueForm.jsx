@@ -1,16 +1,103 @@
 import React from "react";
+import * as yup from "yup";
+import { withFormik, Field, Form } from "formik";
 
-const AddNewIssueForm = () => {
+import { StyledLoginContainer, StyledForm } from "../LoginForm/LoginForm";
+
+const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
+    console.log("add new issue form ", props);
+
+    const handleBackButton = e => {
+        e.preventDefault();
+        props.history.push(`/issueboard/${localStorage.getItem("id")}`);
+    };
+
     return (
-        <div>
-            <h1>Add New Issue Form</h1>
-        </div>
+        <StyledLoginContainer>
+            <StyledForm>
+                <Form>
+                    <div className="input-container">
+                        <label htmlFor="title">Title:</label>
+                        <Field
+                            type="text"
+                            name="title"
+                            id="title"
+                            placeholder="type title"
+                        />
+                        {touched.title && errors.title && (
+                            <p className="error">{errors.title}</p>
+                        )}
+                    </div>
+
+                    <div className="input-container">
+                        <label htmlFor="city">City</label>
+                        <Field
+                            type="text"
+                            name="city"
+                            placeholder="type your city"
+                            id="city"
+                        />
+                        {touched.city && errors.city && (
+                            <p className="error">{errors.city}</p>
+                        )}
+                    </div>
+
+                    <div className="zip-state-container">
+                        <div className="input-container">
+                            <label htmlFor="zip_code">Zip Code</label>
+                            <Field
+                                type="text"
+                                name="zip_code"
+                                placeholder="type your zip-code"
+                                id="zip_code"
+                            />
+                            {touched.zip_code && errors.zip_code && (
+                                <p className="error">{errors.zip_code}</p>
+                            )}
+                        </div>
+                        <div className="input-container">
+                            <label htmlFor="state">State</label>
+                            <Field
+                                type="text"
+                                name="state"
+                                placeholder="type your state"
+                                id="state"
+                            />
+                            {touched.state && errors.state && (
+                                <p className="error">{errors.state}</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="input-container description">
+                        <label htmlFor="description">Description:</label>
+                        <Field
+                            as="textarea"
+                            name="description"
+                            id="description"
+                            placeholder="type your issue"
+                        />
+                        {touched.description && errors.description && (
+                            <p className="error">{errors.description}</p>
+                        )}
+                    </div>
+
+                    <div className="buttons-container">
+                        <button onClick={handleBackButton}>Back</button>
+                        <button type="submit">Add New</button>
+                    </div>
+                </Form>
+            </StyledForm>
+        </StyledLoginContainer>
     );
 };
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 export default AddNewIssueForm;
 =======
+=======
+>>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915
 const withFormikObj = withFormik({
     mapPropsToValues: ({ title, city, zip_code, state, description }) => ({
         title: title || "",
@@ -39,10 +126,16 @@ const withFormikObj = withFormik({
     }),
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915
         props.history.push(`/issueboard/${localStorage.getItem("id")}`);
     }
 })(AddNewIssueForm);
 
 export default withFormikObj;
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915

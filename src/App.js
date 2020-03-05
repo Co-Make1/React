@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Nav from "./components/Nav/Nav";
-import AboutPage from "./pages/AboutPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import IssueBoardPage from "./pages/IssueBoardPage";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
@@ -16,11 +15,9 @@ import "./App.css";
 // }, []);
 
 function App() {
-    const [user, setUser] = useState({});
-
     return (
         <div className="App">
-            <Route path="/" render={() => <Nav user={user} />} />
+            <Route path="/" component={Nav} />
 
             <Switch>
                 <PrivateRoute
@@ -28,25 +25,10 @@ function App() {
                     path="/issueboard/:id"
                     component={IssueBoardPage}
                 />
+                <PrivateRoute exact path="/new" component={AddNewIssueForm} />
 
-                <PrivateRoute
-                    exact
-                    path="issueboard/:id/new"
-                    component={AddNewIssueForm}
-                />
-
-                <Route exact path="/" component={LoginForm} />
-                <Route exact path="/about" component={AboutPage} />
-
-                <Route
-                    path="/login"
-                    render={props => <LoginForm setUser={setUser} {...props} />}
-                />
+                <Route path="/login" component={LoginForm} />
                 <Route path="/signup" component={SignUpForm} />
-
-                <Route component={AboutPage} />
-
-                <Route component={SignUpForm} />
             </Switch>
         </div>
     );

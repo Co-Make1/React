@@ -7,8 +7,8 @@
 }
 
 html {
-    font-size: 100%;
-} /*16px*/
+    font-size: 87.5%;
+} /*14px*/
 
 body {
     background-color: white;
@@ -18,9 +18,10 @@ body {
     color: #333;
 }
 
-p {
+p,
+input,
+button {
     margin-bottom: 1.15rem;
-    font-size: 0.9rem;
 }
 
 h1,
@@ -52,10 +53,14 @@ h4 {
 }
 
 h5 {
-    font-size: 1.08rem;
+    font-size: 1.25em;
 }
 
 small,
 .text_small {
     font-size: 0.8em;
+}
+
+textarea {
+    font-size: 13.3333px;
 }
