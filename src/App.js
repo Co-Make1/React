@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Nav from "./components/Nav/Nav";
@@ -7,7 +7,8 @@ import IssueBoardPage from "./pages/IssueBoardPage";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import PrivateRoute from "./components/PrivateRoute";
 import AddNewIssueForm from "./components/AddNewIssue/AddNewIssueForm";
-
+import { connect } from "react-redux";
+import { loggedIn } from "./components/actions/actionsIndex";
 import "./App.css";
 
 function App() {
@@ -30,4 +31,8 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = state => ({
+    isLoggedIn:state.isLoggedIn
+})
+
+export default connect(mapStateToProps, { loggedIn })(App);

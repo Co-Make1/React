@@ -13,6 +13,7 @@ export const userLogin = user => dispatch => {
             dispatch({ type: SUCCESS_USER_LOGIN, payload: response.data });
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("id", response.data.user.id);
+            localStorage.setItem("username", response.data.user.username);
             console.log("response: ", response);
         })
         .catch(err => {
@@ -42,14 +43,19 @@ export const userSignup = values => dispatch => {
 };
 
 export const LOGOUT_USER = "LOGOUT_USER";
+export const LOGGED_IN = "LOGGED_IN";
 
 export const logOut = () => dispatch => {
     dispatch({ type:LOGOUT_USER })
 
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+    localStorage.removeItem("username");
 }
 
+export const loggedIn = () => dispatch => {
+    dispatch({ type:LOGGED_IN})
+}
 
 export const START_GET_ISSUE = "";
 export const SUCCESS_GET_ISSUE = "";
