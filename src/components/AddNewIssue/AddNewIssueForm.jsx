@@ -92,12 +92,6 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
     );
 };
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-export default AddNewIssueForm;
-=======
-=======
->>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915
 const withFormikObj = withFormik({
     mapPropsToValues: ({ title, city, zip_code, state, description }) => ({
         title: title || "",
@@ -126,16 +120,9 @@ const withFormikObj = withFormik({
     }),
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
-<<<<<<< HEAD
 
-=======
->>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915
         props.history.push(`/issueboard/${localStorage.getItem("id")}`);
     }
 })(AddNewIssueForm);
 
 export default withFormikObj;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 01840ba9d5765b8fa3d81bb76eaadb2ceea88915
