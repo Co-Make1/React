@@ -86,7 +86,7 @@ const StyledCard = styled.div`
 
             p {
                 margin-top: 0.5rem;
-                margin-bottom: 1rem;
+                margin-bottom: 2rem;
             }
         }
 
