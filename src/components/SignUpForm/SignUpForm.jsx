@@ -1,7 +1,6 @@
 import React from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { userSignup } from "../actions/actionsIndex";
 
@@ -19,7 +18,7 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
                             type="username"
                             name="username"
                             id="username"
-                            placeholder="type your email"
+                            placeholder="type your username"
                         />
                         {touched.username && errors.username && (
                             <p className="error">{errors.username}</p>
@@ -38,13 +37,25 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
                         )}
                     </div>
                     <div className="input-container">
-                        <label htmlFor="emailConfirm">
-                            Email
+                        <label htmlFor="confirmPassword">
+                            Confirm Password
                         </label>
+                        <Field
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="type your password"
+                            id="confirmPassword"
+                        />
+                        {touched.confirmPassword && errors.confirmPassword && (
+                            <p className="error">{errors.confirmPassword}</p>
+                        )}
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="email">Email</label>
                         <Field
                             type="email"
                             name="email"
-                            placeholder="email"
+                            placeholder="type your email"
                             id="email"
                         />
                         {touched.email && errors.email && (
@@ -96,18 +107,26 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
     );
 };
 
-const withFormikObj = withFormik( {
-    mapPropsToValues: ({ username, password, email, city }) => ({
+const withFormikObj = withFormik({
+    mapPropsToValues: ({
+        username,
+        password,
+        confirmPassword,
+        email,
+        city,
+        zip_code,
+        state
+    }) => ({
         username: username || "",
         password: password || "",
+        confirmPassword: confirmPassword || "",
         email: email || "",
-        city: city || ""
+        city: city || "",
+        zip_code: zip_code || "",
+        state: state || ""
     }),
     validationSchema: yup.object().shape({
-        username: yup
-            .string()
-            // .email("Email not valid")
-            .required("Username is required"),
+        username: yup.string().required("Username is required"),
         password: yup
             .string()
             // .min(10, "Password must be 10 characters or longer")
@@ -115,12 +134,16 @@ const withFormikObj = withFormik( {
         // .matches(
         //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
-        // )
-        // passwordConfirm: yup
-        //     .string()
-        //     .oneOf([yup.ref("password"), null], `Passwords don't match`)
-        //     .required("Password confirmation is required"),
-        // city: yup.string().required("City is required"),
+        // ),
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref("password"), null], `Passwords don't match`)
+            .required("Password confirmation is required"),
+        email: yup
+            .string()
+            .email("Email is not valid")
+            .required("Email is required"),
+        city: yup.string().required("City is required"),
         zip_code: yup
             .string()
             .matches(/^[0-9]*$/, "Zip code must be numbers only")
@@ -134,9 +157,9 @@ const withFormikObj = withFormik( {
     handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
         console.log("submitting!", values);
         props.userSignup(values);
-        props.history.push('/login');
+        props.history.push("/login");
         resetForm();
- }
+    }
 })(SignUpForm);
 
 export default connect(null, { userSignup })(withFormikObj);

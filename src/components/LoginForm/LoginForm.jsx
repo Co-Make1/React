@@ -27,12 +27,12 @@ const LoginForm = ({
             <StyledForm>
                 <Form>
                     <div className="input-container">
-                        <label htmlFor="username">username</label>
+                        <label htmlFor="username">Username</label>
                         <Field
                             type="username"
                             name="username"
                             id="username"
-                            placeholder="type your email"
+                            placeholder="type your username"
                         />
                         {touched.username && errors.username && (
                             <p className="error">{errors.username}</p>
@@ -76,24 +76,27 @@ export const StyledForm = styled.div`
 
     form {
         margin: 0 auto;
+        width: 100%;
         display: flex;
-        min-width: 300px;
         flex-direction: column;
         justify-content: center;
         align-content: center;
+        padding: 0 2rem;
 
         .input-container {
-            margin-bottom: 2rem;
+            margin-bottom: 1.9rem;
             display: flex;
             flex-direction: column;
             position: relative;
             /* border-bottom: 1px solid #333; */
 
-            input {
+            input,
+            textarea {
                 padding: 0.5rem;
                 border: none;
                 border-bottom: 1px solid #333;
                 background-color: #f8f8f8;
+                font-family: "Open Sans";
             }
         }
 
@@ -101,19 +104,35 @@ export const StyledForm = styled.div`
             margin: 0.2rem 0;
             color: rgba(255, 82, 82, 1);
             border: 1px solid rgba(255, 82, 82, 1);
-            font-size: 0.7rem;
+            border-left: 4px solid rgba(255, 82, 82, 1);
+            font-size: 0.8rem;
+            background-color: white;
             padding: 0.1rem 0.5rem;
             position: absolute;
-            top: 60px;
+            top: 55px;
         }
 
         button {
             width: 100px;
-            margin-top: 3rem;
+            margin-top: 2rem;
+            margin-bottom: 0;
             place-self: center;
-            background-color: white;
+            background-color: #333;
+            color: white;
             border: 1px solid #333;
             padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
+
+            &:hover {
+                transform: scale(1.1);
+                transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
+            }
+
+            &:active {
+                transform: scale(1);
+                transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
+            }
         }
 
         .zip-state-container {
@@ -122,6 +141,28 @@ export const StyledForm = styled.div`
 
             .input-container {
                 width: 48%;
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                margin: 0;
+            }
+        }
+
+        .description {
+            .error {
+                margin: 0.2rem 0;
+                color: rgba(255, 82, 82, 1);
+                border: 1px solid rgba(255, 82, 82, 1);
+                border-left: 4px solid rgba(255, 82, 82, 1);
+                font-size: 0.8rem;
+                padding: 0.1rem 0.5rem;
+                position: absolute;
+                top: 90px;
             }
         }
     }

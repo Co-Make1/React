@@ -8,7 +8,7 @@ const AddNewIssue = props => {
     console.log("history", props.match.url);
 
     const handleClick = () => {
-        props.history.push(`${props.match.url}/new`);
+        props.history.push(`/new`);
     };
 
     return (

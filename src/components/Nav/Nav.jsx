@@ -7,28 +7,17 @@ import { connect } from "react-redux";
 const Nav = props => {
     console.log("nav props:  ", props);
 
-    // const Logout = () => {
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("id");
-    // props.history.push("/login");
-    // };
-
     console.log("user id: ", localStorage.getItem("id"));
+    const userID = localStorage.getItem("id");
 
     return (
         <StyledNav>
             <div className="logo"></div>
             <div className="nav-links">
-                <NavLink to="/" activeClassName="selected" exact>
-                    Home
-                </NavLink>
-                <NavLink to="/about" activeClassName="selected">
-                    About
-                </NavLink>
                 <NavLink
                     to={
                         props.isLoggedIn
-                            ? `/issueboard/${localStorage.getItem("id")}`
+                            ? `/issueboard/${userID}`
                             : `/issueboard/:id`
                     }
                     activeClassName="selected"
@@ -74,7 +63,7 @@ const StyledNav = styled.nav`
 
     .nav-links {
         display: flex;
-        width: 40%;
+        /* width: 30%; */
         justify-content: space-between;
 
         a {
@@ -82,6 +71,7 @@ const StyledNav = styled.nav`
             color: #333;
             position: relative;
             line-height: 3.5rem;
+            margin-left: 2.5rem;
         }
     }
 
