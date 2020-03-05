@@ -11,8 +11,17 @@ export const userLogin = user => dispatch => {
         .post("/auth/login", user)
         .then(response => {
             dispatch({ type: SUCCESS_USER_LOGIN, payload: response.data });
-            localStorage.setItem("token", response.data.token);
+            // localStorage.setItem("user", { 
+            //     id: response.data.user.id, 
+            //     token: response.data.user.token,
+            //     username: response.data.user.username,
+            //     state:  response.data.user.state
+            // });
+            localStorage.setItem("token", response.data.user.token);
             localStorage.setItem("id", response.data.user.id);
+            localStorage.setItem("username", response.data.user.username);
+            localStorage.setItem("state", response.data.user.state);
+
             console.log("response: ", response);
         })
         .catch(err => {
@@ -42,13 +51,21 @@ export const userSignup = values => dispatch => {
 };
 
 export const LOGOUT_USER = "LOGOUT_USER";
+export const LOGGED_IN = "LOGGED_IN";
 
 export const logOut = () => dispatch => {
     dispatch({ type: LOGOUT_USER });
 
     localStorage.removeItem("token");
     localStorage.removeItem("id");
-};
+
+    localStorage.removeItem("username");
+    localStorage.removeItem("state");
+}
+
+export const loggedIn = () => dispatch => {
+    dispatch({ type:LOGGED_IN})
+}
 
 export const START_GET_ISSUE = "";
 export const SUCCESS_GET_ISSUE = "";

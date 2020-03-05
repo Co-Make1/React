@@ -7,7 +7,8 @@ import IssueBoardPage from "./pages/IssueBoardPage";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import PrivateRoute from "./components/PrivateRoute";
 import AddNewIssueForm from "./components/AddNewIssue/AddNewIssueForm";
-
+import { connect } from "react-redux";
+import { loggedIn } from "./components/actions/actionsIndex";
 import "./App.css";
 
 // useEffect(() => {
@@ -34,4 +35,8 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = state => ({
+    isLoggedIn:state.isLoggedIn
+})
+
+export default connect(mapStateToProps, { loggedIn })(App);

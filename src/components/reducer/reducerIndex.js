@@ -6,6 +6,7 @@ import {
     SUCCESS_USER_REGISTER,
     FAILURE_USER_REGISTER,
     LOGOUT_USER,
+    LOGGED_IN,
     START_GET_ISSUE,
     SUCCESS_GET_ISSUE,
     FAILURE_GET_ISSUE,
@@ -18,7 +19,6 @@ import {
     START_UPDATE_ISSUE,
     SUCCESS_UPDATE_ISSUE,
     FAILURE_UPDATE_ISSUE,
-    LOGOUT
 } from "../actions/actionsIndex";
 
 const initialState = {
@@ -85,6 +85,12 @@ export const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: false
+            };
+
+        case LOGGED_IN: 
+            return {
+                ...state,
+                isLoggedIn: true
             };
 
         case START_GET_ISSUE:
