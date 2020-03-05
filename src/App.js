@@ -11,11 +11,14 @@ import { connect } from "react-redux";
 import { loggedIn } from "./components/actions/actionsIndex";
 import "./App.css";
 
-// useEffect(() => {
-//     localStorage.getItem("token") ? isLoggedIn() : null;
-// }, []);
+function App(props) {
+    console.log("AppJS props: ", props);
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            props.loggedIn();
+        }
+    }, []);
 
-function App() {
     return (
         <div className="App">
             <Route path="/" component={Nav} />
@@ -36,7 +39,7 @@ function App() {
 }
 
 const mapStateToProps = state => ({
-    isLoggedIn:state.isLoggedIn
-})
+    isLoggedIn: state.isLoggedIn
+});
 
 export default connect(mapStateToProps, { loggedIn })(App);

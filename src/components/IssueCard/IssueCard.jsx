@@ -4,24 +4,26 @@ import styled from "styled-components";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
 
 const IssueCard = props => {
+    console.log("props on issuecard: ", props);
+
     return (
         <StyledCard>
-            <img src={props.photo} alt={props.issue} />
+            <img src={props.issue.photo} alt={props.issue.issue} />
             <div className="text-container">
                 <div className="top-text">
-                    <h4>{props.issue}</h4>
-                    <h5>{props.hazard_level}</h5>
+                    <h4>{props.issue.issue}</h4>
+                    <h5>{props.issue.hazard_level}</h5>
                 </div>
                 <div className="location">
                     <h5>Location: </h5>
-                    <p>{`${props.city}, ${props.state}`}</p>
+                    <p>{`${props.issue.city}, ${props.issue.state}`}</p>
                 </div>
                 <div className="issue-description">
                     <h5>Description:</h5>
-                    <p>{props.issue_description}</p>
+                    <p>{props.issue.issue_description}</p>
                 </div>
                 <div className="upvotes">
-                    <p>{props.upvotes}</p>
+                    <p>{props.total_upvotes}</p>
                     <UpVoteIcon />
                 </div>
             </div>
