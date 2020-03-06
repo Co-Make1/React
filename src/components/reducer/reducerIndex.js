@@ -7,9 +7,6 @@ import {
     FAILURE_USER_REGISTER,
     LOGOUT_USER,
     LOGGED_IN,
-    START_GET_ISSUE,
-    SUCCESS_GET_ISSUE,
-    FAILURE_GET_ISSUE,
     START_POST_ISSUE,
     SUCCESS_POST_ISSUE,
     FAILURE_POST_ISSUE,
@@ -18,17 +15,15 @@ import {
     FAILURE_DELETE_ISSUE,
     START_UPDATE_ISSUE,
     SUCCESS_UPDATE_ISSUE,
-    FAILURE_UPDATE_ISSUE,
+    FAILURE_UPDATE_ISSUE
 } from "../actions/actionsIndex";
 
 const initialState = {
     isLoggedIn: false,
     isFetching: false,
-    error: ""
-
-    // getIssue: false,
-    // postIssue: false,
-    // deleteIssue: false,
+    isPosted: false,
+    error: "",
+    deleteIssues: false
     // updateIssue: false
 };
 
@@ -87,63 +82,53 @@ export const AppReducer = (state = initialState, action) => {
                 isLoggedIn: false
             };
 
-        case LOGGED_IN: 
+        case LOGGED_IN:
             return {
                 ...state,
                 isLoggedIn: true
             };
 
-        case START_GET_ISSUE:
-            return {
-                ...state,
-                getIssue: true
-            };
-        case SUCCESS_GET_ISSUE:
-            return {
-                ...state,
-                getIssue: false
-            };
-
-        case FAILURE_GET_ISSUE:
-            return {
-                ...state,
-                getIssue: null
-            };
-
         case START_POST_ISSUE:
             return {
                 ...state,
-                postIssue: true
+                isFetching: true,
+                isPosted: false
             };
 
         case SUCCESS_POST_ISSUE:
             return {
                 ...state,
-                postIssue: false
+                isFetching: false,
+                isPosted: true,
+                newIssue: action.payload
             };
 
         case FAILURE_POST_ISSUE:
             return {
                 ...state,
-                postIssue: null
+                isFetching: false,
+                error: action.payload
             };
 
         case START_DELETE_ISSUE:
             return {
                 ...state,
-                deleteIssue: true
+                isFetching: true,
+                deleteIssues: false
             };
 
         case SUCCESS_DELETE_ISSUE:
             return {
                 ...state,
-                deleteIssue: false
+                isFetching: false,
+                deleteIssues: true
             };
 
         case FAILURE_DELETE_ISSUE:
             return {
                 ...state,
-                deleteIssue: null
+                isFetching: false,
+                error: action.payload
             };
 
         case START_UPDATE_ISSUE:

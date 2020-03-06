@@ -5,23 +5,33 @@ import IssueCard from "../components/IssueCard/IssueCard";
 import AddNewIssue from "../components/AddNewIssue/AddNewIssue";
 import { axiosWithAuth } from "../components/utils/axiosWithAuth";
 
+import { deleteIssue } from "../components/actions/actionsIndex";
+import { connect } from "react-redux";
+
 const IssueBoardPage = props => {
     console.log("issue board page props", props);
     const [issues, setIssues] = useState([]);
 
-    useEffect(() => {
-        axiosWithAuth()
-            .get(
-                `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
-                    "id"
-                )}/issues`
-            )
+    console.log(props.deleteIssues)
 
-            .then(res => {
-                setIssues(res.data);
-            })
-            .catch(err => console.log(err));
-    }, []);
+    useEffect(() => {
+        if (props.deleteIssues) {
+            axiosWithAuth()
+                .get(
+                    `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
+                        "id"
+                    )}/issues`
+                )
+
+                .then(res => {
+                    setIssues(res.data);
+
+                })
+                .catch(err => console.log(err));
+        }
+
+        console.log(props.deleteIssues)
+    }, [props.deleteIssues]);
 
     console.log(issues);
 
@@ -30,7 +40,14 @@ const IssueBoardPage = props => {
             <AddNewIssue {...props} />
             <StyledIssueBoard>
                 {issues.map(issue => {
-                    return <IssueCard {...issue} key={issue.issue.id} />;
+                    return (
+                        <IssueCard
+                            {...issue}
+                            key={issue.issue.id}
+                            {...props}
+
+                        />
+                    );
                 })}
             </StyledIssueBoard>
         </>
@@ -48,4 +65,9 @@ const StyledIssueBoard = styled.div`
     justify-content: center;
 `;
 
-export default IssueBoardPage;
+const mapStateToProps = state => ({
+    isFetching: state.isFetching, 
+    deleteIssues: state.deleteIssues
+})
+
+export default connect(mapStateToProps)(IssueBoardPage);

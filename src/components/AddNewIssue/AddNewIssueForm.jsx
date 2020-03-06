@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
-
+import { connect } from "react-redux";
+import { postIssue } from "../actions/actionsIndex";
 import { StyledLoginContainer, StyledForm } from "../LoginForm/LoginForm";
 
 const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
@@ -12,20 +13,27 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
         props.history.push(`/issueboard/${localStorage.getItem("id")}`);
     };
 
+    useEffect(() => {
+        console.log('ISPOSTED: ', props.isPosted)
+        if (props.isPosted) {
+            props.history.push(`/issueboard/${localStorage.getItem("id")}`)
+        }
+    }, [props.isPosted])
+
     return (
         <StyledLoginContainer>
             <StyledForm>
                 <Form>
                     <div className="input-container">
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="issue">Issue:</label>
                         <Field
                             type="text"
-                            name="title"
-                            id="title"
-                            placeholder="type title"
+                            name="issue"
+                            id="issue"
+                            placeholder="type issue"
                         />
-                        {touched.title && errors.title && (
-                            <p className="error">{errors.title}</p>
+                        {touched.issue && errors.issue && (
+                            <p className="error">{errors.issue}</p>
                         )}
                     </div>
 
@@ -46,7 +54,7 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
                         <div className="input-container">
                             <label htmlFor="zip_code">Zip Code</label>
                             <Field
-                                type="text"
+                                type="number"
                                 name="zip_code"
                                 placeholder="type your zip-code"
                                 id="zip_code"
@@ -68,18 +76,33 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
                             )}
                         </div>
                     </div>
+                    <div className="input-container">
+                        <label htmlFor="hazard_level">Hazard_Level</label>
+                        <Field
+                            type="text"
+                            name="hazard_level"
+                            placeholder="type the hazard_level"
+                            id="hazard_level"
+                        />
+                        {touched.hazard_level && errors.hazard_level && (
+                            <p className="error">{errors.hazard_level}</p>
+                        )}
+                    </div>
 
                     <div className="input-container description">
                         <label htmlFor="description">Description:</label>
                         <Field
                             as="textarea"
-                            name="description"
-                            id="description"
+                            name="issue_description"
+                            id="issue_description"
                             placeholder="type your issue"
                         />
-                        {touched.description && errors.description && (
-                            <p className="error">{errors.description}</p>
-                        )}
+                        {touched.issue_description &&
+                            errors.issue_description && (
+                                <p className="error">
+                                    {errors.issue_description}
+                                </p>
+                            )}
                     </div>
 
                     <div className="buttons-container">
@@ -93,15 +116,24 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
 };
 
 const withFormikObj = withFormik({
-    mapPropsToValues: ({ title, city, zip_code, state, description }) => ({
-        title: title || "",
+    mapPropsToValues: ({
+        issue,
+        city,
+        zip_code,
+        state,
+        hazard_level,
+        issue_description
+    }) => ({
+        issue: issue || "",
         city: city || "",
         zip_code: zip_code || "",
         state: state || "",
-        description: description || ""
+        hazard_level: hazard_level || "",
+        issue_description: issue_description || "",
+        user_id: parseInt(localStorage.getItem("id"))
     }),
     validationSchema: yup.object().shape({
-        title: yup.string().required("Title is required"),
+        issue: yup.string().required("Issue is required"),
         city: yup.string().required("City is required"),
 
         zip_code: yup
@@ -113,16 +145,22 @@ const withFormikObj = withFormik({
             .max(2, "State must be 2 characters long")
             .min(2, "State must be 2 characters long")
             .required("State is required"),
-        description: yup
+        hazard_level: yup.string().required("hazard_level is required"),
+        issue_description: yup
             .string()
             .max(180, "180 characters maximum")
             .required("Description is required")
     }),
     handleSubmit: (values, { props }) => {
         console.log("submitting!", values);
-
-        props.history.push(`/issueboard/${localStorage.getItem("id")}`);
+        props.postIssue(values);
+        console.log(`IS FETCHING STATE!`,props.isFetching)
     }
 })(AddNewIssueForm);
 
-export default withFormikObj;
+const mapStateToProps = state => ({
+    isFetching: state.isFetching, 
+    isPosted: state.isPosted
+});
+
+export default connect(mapStateToProps, { postIssue })(withFormikObj);
