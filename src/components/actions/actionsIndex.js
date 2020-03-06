@@ -67,6 +67,7 @@ export const loggedIn = () => dispatch => {
     dispatch({ type: LOGGED_IN });
 };
 
+<<<<<<< HEAD
 export const START_POST_ISSUE = "";
 export const SUCCESS_POST_ISSUE = "";
 export const FAILURE_POST_ISSUE = "";
@@ -78,6 +79,12 @@ export const FAILURE_DELETE_ISSUE = "";
 export const START_UPDATE_ISSUE = "";
 export const SUCCESS_UPDATE_ISSUE = "";
 export const FAILURE_UPDATE_ISSUE = "";
+=======
+
+export const START_POST_ISSUE = "START_POST_ISSUE";
+export const SUCCESS_POST_ISSUE = "SUCCESS_POST_ISSUE";
+export const FAILURE_POST_ISSUE = "FAILURE_POST_ISSUE"; 
+>>>>>>> c4df5735ae3014dd483241da5d393ff5b7a76851
 
 export const postIssue = newIssue => dispatch => {
     dispatch({ type: START_POST_ISSUE });
@@ -95,7 +102,16 @@ export const postIssue = newIssue => dispatch => {
         });
 };
 
+<<<<<<< HEAD
 export const deleteIssue = issue => dispatch => {
+=======
+
+export const START_DELETE_ISSUE = "START_DELETE_ISSUE";
+export const SUCCESS_DELETE_ISSUE = "SUCCESS_DELETE_ISSUE";
+export const FAILURE_DELETE_ISSUE = "FAILURE_DELETE_ISSUE";
+
+export const deleteIssue = (issue) => dispatch => {
+>>>>>>> c4df5735ae3014dd483241da5d393ff5b7a76851
     dispatch({ type: START_DELETE_ISSUE });
 
     axiosWithAuth()
@@ -110,11 +126,21 @@ export const deleteIssue = issue => dispatch => {
         });
 };
 
-export const updateIssue = () => dispatch => {
+
+
+export const START_UPDATE_ISSUE = "START_UPDATE_ISSUE";
+export const SUCCESS_UPDATE_ISSUE = "SUCCESS_UPDATE_ISSUE";
+export const FAILURE_UPDATE_ISSUE = "FAILURE_UPDATE_ISSUE";
+
+
+
+
+
+export const updateIssue = (issue) => dispatch => {
     dispatch({ type: START_UPDATE_ISSUE });
 
     axiosWithAuth()
-        .get("")
+        .put(`/users/${localStorage.getItem("id")}/issues/${issue.id}`, issue)
         .then(res => {
             console.log(res);
             dispatch({ type: SUCCESS_UPDATE_ISSUE, payload: res.data });
