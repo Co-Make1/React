@@ -11,32 +11,10 @@ const IssueBoardPage = props => {
     console.log("issue board page props", props);
     console.log("deleteIssues:", props.deleteIssues);
 
-<<<<<<< HEAD
     console.log(props.deleteIssues);
 
     useEffect(() => {
         props.getIssues();
-=======
-    console.log("deleteIssues:",props.deleteIssues)
-
-    useEffect(() => {
-        if (!props.deleteIssues) {
-            axiosWithAuth()
-                .get(
-                    `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
-                        "id"
-                    )}/issues`
-                )
-
-                .then(res => {
-                    setIssues(res.data);
-
-                })
-                .catch(err => console.log(err));
-        }
-
-        console.log("ALESSANDRA",props.deleteIssues)
->>>>>>> c4df5735ae3014dd483241da5d393ff5b7a76851
     }, [props.deleteIssues]);
 
     return (
@@ -45,16 +23,7 @@ const IssueBoardPage = props => {
             <StyledIssueBoard>
                 {props.issues.map(issue => {
                     return (
-<<<<<<< HEAD
                         <IssueCard {...issue} key={issue.issue.id} {...props} />
-=======
-                        <IssueCard
-                            {...issue}
-                            key={issue.issue.id}
-                            
-
-                        />
->>>>>>> c4df5735ae3014dd483241da5d393ff5b7a76851
                     );
                 })}
             </StyledIssueBoard>
