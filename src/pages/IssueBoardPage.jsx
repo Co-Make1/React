@@ -4,18 +4,16 @@ import styled from "styled-components";
 import IssueCard from "../components/IssueCard/IssueCard";
 import AddNewIssue from "../components/AddNewIssue/AddNewIssue";
 import { axiosWithAuth } from "../components/utils/axiosWithAuth";
-
-import { deleteIssue } from "../components/actions/actionsIndex";
 import { connect } from "react-redux";
 
 const IssueBoardPage = props => {
     console.log("issue board page props", props);
     const [issues, setIssues] = useState([]);
 
-    console.log(props.deleteIssues)
+    console.log("deleteIssues:",props.deleteIssues)
 
     useEffect(() => {
-        if (props.deleteIssues) {
+        if (!props.deleteIssues) {
             axiosWithAuth()
                 .get(
                     `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
@@ -30,7 +28,7 @@ const IssueBoardPage = props => {
                 .catch(err => console.log(err));
         }
 
-        console.log(props.deleteIssues)
+        console.log("ALESSANDRA",props.deleteIssues)
     }, [props.deleteIssues]);
 
     console.log(issues);
@@ -44,7 +42,7 @@ const IssueBoardPage = props => {
                         <IssueCard
                             {...issue}
                             key={issue.issue.id}
-                            {...props}
+                            
 
                         />
                     );

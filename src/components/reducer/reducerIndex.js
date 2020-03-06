@@ -15,7 +15,7 @@ import {
     FAILURE_DELETE_ISSUE,
     START_UPDATE_ISSUE,
     SUCCESS_UPDATE_ISSUE,
-    FAILURE_UPDATE_ISSUE
+    FAILURE_UPDATE_ISSUE,
 } from "../actions/actionsIndex";
 
 const initialState = {
@@ -88,11 +88,13 @@ export const AppReducer = (state = initialState, action) => {
                 isLoggedIn: true
             };
 
+
         case START_POST_ISSUE:
             return {
                 ...state,
                 isFetching: true,
-                isPosted: false
+                isPosted: false,
+                
             };
 
         case SUCCESS_POST_ISSUE:
@@ -101,12 +103,14 @@ export const AppReducer = (state = initialState, action) => {
                 isFetching: false,
                 isPosted: true,
                 newIssue: action.payload
+                
             };
 
         case FAILURE_POST_ISSUE:
             return {
                 ...state,
                 isFetching: false,
+                isPosted:false,
                 error: action.payload
             };
 
@@ -120,33 +124,41 @@ export const AppReducer = (state = initialState, action) => {
         case SUCCESS_DELETE_ISSUE:
             return {
                 ...state,
-                isFetching: false,
-                deleteIssues: true
+                isFetching:false,
+                deleteIssues:true
             };
 
         case FAILURE_DELETE_ISSUE:
             return {
                 ...state,
-                isFetching: false,
+                isFetching:false,
+                deleteIssues:false,
                 error: action.payload
             };
+
+
 
         case START_UPDATE_ISSUE:
             return {
                 ...state,
-                updateIssue: true
+                isFetching:true,
+                updateIssue: false
             };
 
         case SUCCESS_UPDATE_ISSUE:
             return {
                 ...state,
-                updateIssue: false
+                isFetching:false,
+                updateIssue: true,
+                issue: action.payload
             };
 
         case FAILURE_UPDATE_ISSUE:
             return {
                 ...state,
-                updateIssue: null
+                isFetching:false,
+                updateIssue: false,
+                error: action.payload
             };
 
         default:

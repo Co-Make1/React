@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteIssue } from "../actions/actionsIndex";
+import { deleteIssue, updateIssue } from "../actions/actionsIndex";
 import { connect } from "react-redux";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
 import { ReactComponent as UpVotedIcon } from "../../assets/upvoted.svg";
+import EditIssueForm from "../EditIssueForm/EditIssueForm";
 
 
 const IssueCard = props => {
     console.log("props on issuecard: ", props);
     const [upVotes, setUpVotes] = useState(props.total_votes);
     const [upVoted, setUpVoted] = useState(false);
+    const [editing, setEditing] = useState(false);
+    const [editIssue, setEditIssue] = useState(props.issue);
 
     useEffect(() => {
         const wasUpvoted = props.upvotes.filter(
@@ -24,7 +27,23 @@ const IssueCard = props => {
     const handleDelete = e => {
         e.preventDefault();
         props.deleteIssue(props.issue);
+        
     };
+
+    const handleEdit = (e,issue) => {
+        e.preventDefault();
+        props.updateIssue(issue);
+    };
+
+    const editingIssue = (e,issue) => {
+        e.preventDefault();
+        setEditing(true);
+        setEditIssue(issue)
+    }
+
+    const cancelEdit = () => {
+        setEditing(false);
+    }
 
     return (
         <StyledCard>
@@ -55,6 +74,10 @@ const IssueCard = props => {
                     )}
                 </div>
                 <button onClick={handleDelete}>Delete</button>
+                <button onClick={(e)=> editingIssue(e, props.issue)}>Edit</button>
+                {editing &&(<div>
+                    <EditIssueForm editIssue={editIssue} setEditIssue={setEditIssue} handleEdit={handleEdit} cancelEdit={cancelEdit} />
+                </div>)}
             </div>
         </StyledCard>
     );
@@ -147,11 +170,12 @@ const StyledCard = styled.div`
     }
 `;
 
-// const mapStateToProps = state => ({
-//     deleteIssues: state.deleteIssues
-// });
+const mapStateToProps = state => ({
+    deleteIssues: state.deleteIssues,
+    updateIssue: state.updateIssue
+});
 
-export default connect(null, { deleteIssue })(IssueCard);
+export default connect(mapStateToProps, { deleteIssue, updateIssue })(IssueCard);
 
 
-// export default IssueCard;
+
