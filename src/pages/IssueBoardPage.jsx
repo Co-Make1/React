@@ -58,8 +58,8 @@ const StyledIssueBoard = styled.div`
     /* height: 100vh; */
 
     display: grid;
-    grid-template-columns: repeat(3, minmax(300px, 450px));
-    margin: 3rem auto;
+    grid-template-columns: repeat(3, minmax(300px, 400px));
+    margin: 3rem 3rem;
     grid-gap: 3rem;
     align-items: stretch;
     justify-content: center;

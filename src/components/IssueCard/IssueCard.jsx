@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteIssue } from "../actions/actionsIndex";
 import { connect } from "react-redux";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
+import { ReactComponent as UpVotedIcon } from "../../assets/upvoted.svg";
 
 
 const IssueCard = props => {
     console.log("props on issuecard: ", props);
+    const [upVotes, setUpVotes] = useState(props.total_votes);
+    const [upVoted, setUpVoted] = useState(false);
+
+    useEffect(() => {
+        const wasUpvoted = props.upvotes.filter(
+            element => element.user_id.toString() === localStorage.getItem("id")
+        );
+        console.log("was upvoted: ", wasUpvoted.length);
+        if (wasUpvoted.length > 0) {
+            setUpVoted(true);
+        }
+    }, []);
 
     const handleDelete = e => {
         e.preventDefault();
@@ -15,23 +28,31 @@ const IssueCard = props => {
 
     return (
         <StyledCard>
-            <img src={props.issue.photo} alt={props.issue.issue} />
+            {props.issue.photo ? (
+                <img src={props.issue.photo} alt={props.issue.issue} />
+            ) : (
+                <img src="/photo-template.PNG" alt="template" />
+            )}
             <div className="text-container">
                 <div className="top-text">
                     <h4>{props.issue.issue}</h4>
-                    <h5>{props.issue.hazard_level}</h5>
+                    <p className="hazard">{props.issue.hazard_level}</p>
                 </div>
                 <div className="location">
-                    <h5>Location: </h5>
+                    <strong>Location: </strong>
                     <p>{`${props.issue.city}, ${props.issue.state}`}</p>
                 </div>
                 <div className="issue-description">
-                    <h5>Description:</h5>
+                    <strong>Description:</strong>
                     <p>{props.issue.issue_description}</p>
                 </div>
                 <div className="upvotes">
                     <p>{props.total_upvotes}</p>
-                    <UpVoteIcon />
+                    {upVoted ? (
+                        <UpVotedIcon onClick={console.log("CLICKED")} />
+                    ) : (
+                        <UpVoteIcon />
+                    )}
                 </div>
                 <button onClick={handleDelete}>Delete</button>
             </div>
@@ -69,33 +90,37 @@ const StyledCard = styled.div`
         .top-text {
             display: flex;
             justify-content: space-between;
+            align-items: baseline;
             h4 {
                 font-family: "Permanent Marker";
+                max-width: 65%;
             }
 
-            h5 {
+            .hazard {
                 color: white;
-                background-color: #333;
-                padding: 0.2rem 0.7rem;
+                background: #333;
+                padding: 0.2rem 0.9rem;
+                font-size: 0.9rem;
+                border-radius: 5px;
             }
         }
 
         .location {
             display: flex;
             justify-content: space-between;
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         .issue-description {
-            margin-top: 0.5rem;
+            margin-top: 0rem;
 
             p,
-            h5 {
+            h4 {
                 margin: 0;
             }
 
             p {
-                margin-top: 0.5rem;
+                margin-top: 0rem;
                 margin-bottom: 2rem;
             }
         }

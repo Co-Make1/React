@@ -21,7 +21,7 @@ const AddNewIssue = props => {
 
 const StyledAddNewIssue = styled.div`
     display: flex;
-    max-width: 1446px;
+    max-width: 1284px;
     /* border: 1px solid black; */
     margin: 0 auto;
     margin-top: 100px;
