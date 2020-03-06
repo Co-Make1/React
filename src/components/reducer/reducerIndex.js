@@ -15,15 +15,20 @@ import {
     FAILURE_DELETE_ISSUE,
     START_UPDATE_ISSUE,
     SUCCESS_UPDATE_ISSUE,
-    FAILURE_UPDATE_ISSUE
+    FAILURE_UPDATE_ISSUE,
+    START_GET_ISSUES,
+    SUCESS_GET_ISSUES,
+    FAILURE_GET_ISSUES
 } from "../actions/actionsIndex";
 
 const initialState = {
     isLoggedIn: false,
     isFetching: false,
     isPosted: false,
+    isSuccessful: false,
     error: "",
-    deleteIssues: false
+    deleteIssues: false,
+    issues: []
     // updateIssue: false
 };
 
@@ -147,6 +152,28 @@ export const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updateIssue: null
+            };
+
+        case START_GET_ISSUES:
+            return {
+                ...state,
+                isFetching: true,
+                isSuccessful: false
+            };
+        case SUCESS_GET_ISSUES:
+            return {
+                ...state,
+                isFetching: false,
+                isSuccessful: true,
+                isPosted: false,
+                issues: action.payload
+            };
+        case FAILURE_GET_ISSUES:
+            return {
+                ...state,
+                isFetching: false,
+                isSuccessful: false,
+                error: action.payload
             };
 
         default:

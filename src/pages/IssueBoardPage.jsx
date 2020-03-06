@@ -7,46 +7,25 @@ import { axiosWithAuth } from "../components/utils/axiosWithAuth";
 
 import { deleteIssue } from "../components/actions/actionsIndex";
 import { connect } from "react-redux";
+import { getIssues } from "../components/actions/actionsIndex";
 
 const IssueBoardPage = props => {
     console.log("issue board page props", props);
-    const [issues, setIssues] = useState([]);
+    console.log("deleteIssues:", props.deleteIssues);
 
-    console.log(props.deleteIssues)
+    console.log(props.deleteIssues);
 
     useEffect(() => {
-        if (props.deleteIssues) {
-            axiosWithAuth()
-                .get(
-                    `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
-                        "id"
-                    )}/issues`
-                )
-
-                .then(res => {
-                    setIssues(res.data);
-
-                })
-                .catch(err => console.log(err));
-        }
-
-        console.log(props.deleteIssues)
+        props.getIssues();
     }, [props.deleteIssues]);
-
-    console.log(issues);
 
     return (
         <>
             <AddNewIssue {...props} />
             <StyledIssueBoard>
-                {issues.map(issue => {
+                {props.issues.map(issue => {
                     return (
-                        <IssueCard
-                            {...issue}
-                            key={issue.issue.id}
-                            {...props}
-
-                        />
+                        <IssueCard {...issue} key={issue.issue.id} {...props} />
                     );
                 })}
             </StyledIssueBoard>
@@ -66,8 +45,10 @@ const StyledIssueBoard = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    isFetching: state.isFetching, 
-    deleteIssues: state.deleteIssues
-})
+    isFetching: state.isFetching,
+    deleteIssues: state.deleteIssues,
+    isSuccessful: state.isSuccessful,
+    issues: state.issues
+});
 
-export default connect(mapStateToProps)(IssueBoardPage);
+export default connect(mapStateToProps, { getIssues })(IssueBoardPage);

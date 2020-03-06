@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import * as yup from "yup";
 import { withFormik, Field, Form } from "formik";
 import { connect } from "react-redux";
@@ -14,11 +14,10 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
     };
 
     useEffect(() => {
-        console.log('ISPOSTED: ', props.isPosted)
         if (props.isPosted) {
-            props.history.push(`/issueboard/${localStorage.getItem("id")}`)
+            props.history.push(`/issueboard/${localStorage.getItem("id")}`);
         }
-    }, [props.isPosted])
+    }, [props.isPosted]);
 
     return (
         <StyledLoginContainer>
@@ -154,12 +153,12 @@ const withFormikObj = withFormik({
     handleSubmit: (values, { props }) => {
         console.log("submitting!", values);
         props.postIssue(values);
-        console.log(`IS FETCHING STATE!`,props.isFetching)
+        console.log(`IS FETCHING STATE!`, props.isFetching);
     }
 })(AddNewIssueForm);
 
 const mapStateToProps = state => ({
-    isFetching: state.isFetching, 
+    isFetching: state.isFetching,
     isPosted: state.isPosted
 });
 

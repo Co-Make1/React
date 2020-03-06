@@ -67,7 +67,6 @@ export const loggedIn = () => dispatch => {
     dispatch({ type: LOGGED_IN });
 };
 
-
 export const START_POST_ISSUE = "";
 export const SUCCESS_POST_ISSUE = "";
 export const FAILURE_POST_ISSUE = "";
@@ -80,9 +79,9 @@ export const START_UPDATE_ISSUE = "";
 export const SUCCESS_UPDATE_ISSUE = "";
 export const FAILURE_UPDATE_ISSUE = "";
 
-export const postIssue = (newIssue) => dispatch => {
+export const postIssue = newIssue => dispatch => {
     dispatch({ type: START_POST_ISSUE });
-    console.log(newIssue)
+    console.log(newIssue);
 
     axiosWithAuth()
         .post(`/users/${localStorage.getItem("id")}/issues/`, newIssue)
@@ -96,7 +95,7 @@ export const postIssue = (newIssue) => dispatch => {
         });
 };
 
-export const deleteIssue = (issue) => dispatch => {
+export const deleteIssue = issue => dispatch => {
     dispatch({ type: START_DELETE_ISSUE });
 
     axiosWithAuth()
@@ -104,7 +103,6 @@ export const deleteIssue = (issue) => dispatch => {
         .then(res => {
             console.log(res);
             dispatch({ type: SUCCESS_DELETE_ISSUE, payload: res.data });
-            
         })
         .catch(error => {
             console.log(error);
@@ -124,5 +122,28 @@ export const updateIssue = () => dispatch => {
         .catch(error => {
             console.log(error);
             dispatch({ type: FAILURE_UPDATE_ISSUE, payload: error });
+        });
+};
+
+export const START_GET_ISSUES = "START_GET_ISSUES";
+export const SUCESS_GET_ISSUES = "SUCESS_GET_ISSUES";
+export const FAILURE_GET_ISSUES = "FAILURE_GET_ISSUES";
+
+export const getIssues = () => dispatch => {
+    dispatch({ type: START_GET_ISSUES });
+
+    axiosWithAuth()
+        .get(
+            `https://co-make-backend.herokuapp.com/api/users/${localStorage.getItem(
+                "id"
+            )}/issues`
+        )
+        .then(res => {
+            console.log("GET ISSUES RES: ", res);
+            dispatch({ type: SUCESS_GET_ISSUES, payload: res.data });
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch({ type: FAILURE_GET_ISSUES, payload: error });
         });
 };
