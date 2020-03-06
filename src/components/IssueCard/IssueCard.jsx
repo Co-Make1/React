@@ -1,10 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-
+import { deleteIssue } from "../actions/actionsIndex";
+import { connect } from "react-redux";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
+
 
 const IssueCard = props => {
     console.log("props on issuecard: ", props);
+
+    const handleDelete = e => {
+        e.preventDefault();
+        props.deleteIssue(props.issue);
+    };
 
     return (
         <StyledCard>
@@ -26,6 +33,7 @@ const IssueCard = props => {
                     <p>{props.total_upvotes}</p>
                     <UpVoteIcon />
                 </div>
+                <button onClick={handleDelete}>Delete</button>
             </div>
         </StyledCard>
     );
@@ -114,4 +122,11 @@ const StyledCard = styled.div`
     }
 `;
 
-export default IssueCard;
+// const mapStateToProps = state => ({
+//     deleteIssues: state.deleteIssues
+// });
+
+export default connect(null, { deleteIssue })(IssueCard);
+
+
+// export default IssueCard;
