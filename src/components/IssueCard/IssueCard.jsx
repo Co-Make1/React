@@ -6,13 +6,15 @@ import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
 import { ReactComponent as UpVotedIcon } from "../../assets/upvoted.svg";
 import EditIssueForm from "../EditIssueForm/EditIssueForm";
 
-
 const IssueCard = props => {
     console.log("props on issuecard: ", props);
-    const [upVotes, setUpVotes] = useState(props.total_votes);
+    const [upVotes, setUpVotes] = useState(props.total_upvotes);
     const [upVoted, setUpVoted] = useState(false);
     const [editing, setEditing] = useState(false);
-    const [editIssue, setEditIssue] = useState(props.issue);
+    const [editIssue, setEditIssue] = useState({
+        id: props.issue.id,
+        user_id: localStorage.getItem("id")
+    });
 
     useEffect(() => {
         const wasUpvoted = props.upvotes.filter(
@@ -24,26 +26,34 @@ const IssueCard = props => {
         }
     }, []);
 
+    console.log("TYPEOF UPVOTES", typeof upVotes);
+    console.log("UPVOTES", upVotes);
+
+    const toggleUpVote = () => {
+        upVoted ? setUpVotes(upVotes - 1) : setUpVotes(upVotes + 1);
+        setUpVoted(!upVoted);
+    };
+
     const handleDelete = e => {
         e.preventDefault();
         props.deleteIssue(props.issue);
-        
     };
 
-    const handleEdit = (e,issue) => {
+    const handleEdit = (e, issue) => {
         e.preventDefault();
         props.updateIssue(issue);
+        setEditing(false);
     };
 
-    const editingIssue = (e,issue) => {
+    const editingIssue = (e, issue) => {
         e.preventDefault();
         setEditing(true);
-        setEditIssue(issue)
-    }
+        setEditIssue(issue);
+    };
 
     const cancelEdit = () => {
         setEditing(false);
-    }
+    };
 
     return (
         <StyledCard>
@@ -66,18 +76,25 @@ const IssueCard = props => {
                     <p>{props.issue.issue_description}</p>
                 </div>
                 <div className="upvotes">
-                    <p>{props.total_upvotes}</p>
+                    <p>{upVotes}</p>
                     {upVoted ? (
-                        <UpVotedIcon onClick={console.log("CLICKED")} />
+                        <UpVotedIcon onClick={toggleUpVote} />
                     ) : (
-                        <UpVoteIcon />
+                        <UpVoteIcon onClick={toggleUpVote} />
                     )}
                 </div>
                 <button onClick={handleDelete}>Delete</button>
-                <button onClick={(e)=> editingIssue(e, props.issue)}>Edit</button>
-                {editing &&(<div>
-                    <EditIssueForm editIssue={editIssue} setEditIssue={setEditIssue} handleEdit={handleEdit} cancelEdit={cancelEdit} />
-                </div>)}
+                <button onClick={e => editingIssue(e, editIssue)}>Edit</button>
+                {editing && (
+                    <div>
+                        <EditIssueForm
+                            editIssue={editIssue}
+                            setEditIssue={setEditIssue}
+                            handleEdit={handleEdit}
+                            cancelEdit={cancelEdit}
+                        />
+                    </div>
+                )}
             </div>
         </StyledCard>
     );
@@ -172,10 +189,9 @@ const StyledCard = styled.div`
 
 const mapStateToProps = state => ({
     deleteIssues: state.deleteIssues,
-    updateIssue: state.updateIssue
+    isUpdated: state.isUpdated
 });
 
-export default connect(mapStateToProps, { deleteIssue, updateIssue })(IssueCard);
-
-
-
+export default connect(mapStateToProps, { deleteIssue, updateIssue })(
+    IssueCard
+);

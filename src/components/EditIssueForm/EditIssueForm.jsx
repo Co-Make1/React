@@ -59,7 +59,7 @@ const EditIssueForm = props => {
                         value={props.editIssue.issue_description}
                         onChange={event => handleChange(event)}
                     />
-                    <button>Edit Issue</button>
+                    <button type="submit">Edit Issue</button>
                     <button onClick={props.cancelEdit}>Cancel</button>
                 </form>
             )}

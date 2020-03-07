@@ -116,7 +116,7 @@ export const updateIssue = issue => dispatch => {
     axiosWithAuth()
         .put(`/users/${localStorage.getItem("id")}/issues/${issue.id}`, issue)
         .then(res => {
-            console.log(res);
+            console.log("UPDATING RESPONSE", res);
             dispatch({ type: SUCCESS_UPDATE_ISSUE, payload: res.data });
         })
         .catch(error => {

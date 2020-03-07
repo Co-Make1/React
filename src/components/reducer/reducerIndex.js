@@ -28,8 +28,8 @@ const initialState = {
     isSuccessful: false,
     error: "",
     deleteIssues: false,
-    issues: []
-    // updateIssue: false
+    issues: [],
+    isUpdated: false
 };
 
 export const AppReducer = (state = initialState, action) => {
@@ -142,14 +142,14 @@ export const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: true,
-                updateIssue: false
+                isUpdated: false
             };
 
         case SUCCESS_UPDATE_ISSUE:
             return {
                 ...state,
                 isFetching: false,
-                updateIssue: true,
+                isUpdated: true,
                 issue: action.payload
             };
 
@@ -157,7 +157,7 @@ export const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                updateIssue: false,
+                isUpdated: false,
                 error: action.payload
             };
 
@@ -173,6 +173,7 @@ export const AppReducer = (state = initialState, action) => {
                 isFetching: false,
                 isSuccessful: true,
                 isPosted: false,
+                isUpdated: false,
                 issues: action.payload
             };
         case FAILURE_GET_ISSUES:

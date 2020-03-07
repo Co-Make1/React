@@ -15,7 +15,7 @@ const IssueBoardPage = props => {
 
     useEffect(() => {
         props.getIssues();
-    }, [props.deleteIssues]);
+    }, [props.deleteIssues, props.isUpdated]);
 
     return (
         <>
@@ -46,7 +46,8 @@ const mapStateToProps = state => ({
     isFetching: state.isFetching,
     deleteIssues: state.deleteIssues,
     isSuccessful: state.isSuccessful,
-    issues: state.issues
+    issues: state.issues,
+    isUpdated: state.isUpdated
 });
 
 export default connect(mapStateToProps, { getIssues })(IssueBoardPage);
