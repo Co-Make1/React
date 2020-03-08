@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { logOut } from "../actions/actionsIndex";
 import { connect } from "react-redux";
+import { ReactComponent as LogoIcon } from "../../assets/logo.svg";
 
 const Nav = props => {
     console.log("nav props:  ", props);
@@ -12,7 +13,9 @@ const Nav = props => {
 
     return (
         <StyledNav>
-            <div className="logo"></div>
+            <div className="logo">
+                <LogoIcon />
+            </div>
             <div className="nav-links">
                 <NavLink
                     to={
@@ -53,12 +56,12 @@ const StyledNav = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
+    height: 10%;
     background-color: white;
     z-index: 999;
     .logo {
         width: 25px;
-        height: 25px;
-        background-color: blue;
+        padding-top: 5px;
     }
 
     .nav-links {
@@ -69,6 +72,8 @@ const StyledNav = styled.nav`
         a {
             text-decoration: none;
             color: #333;
+            font-size:15px;
+            font-weight: 600;
             position: relative;
             line-height: 3.5rem;
             margin-left: 2.5rem;
@@ -79,7 +84,7 @@ const StyledNav = styled.nav`
         content: "";
         width: 100%;
         height: 5px;
-        background-color: blue;
+        background-color: #217AFF;
         position: absolute;
         bottom: 0;
         left: 0;

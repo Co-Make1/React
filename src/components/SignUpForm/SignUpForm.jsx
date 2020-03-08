@@ -37,20 +37,6 @@ const SignUpForm = ({ errors, status, touched, ...props }) => {
                         )}
                     </div>
                     <div className="input-container">
-                        <label htmlFor="confirmPassword">
-                            Confirm Password
-                        </label>
-                        <Field
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="type your password"
-                            id="confirmPassword"
-                        />
-                        {touched.confirmPassword && errors.confirmPassword && (
-                            <p className="error">{errors.confirmPassword}</p>
-                        )}
-                    </div>
-                    <div className="input-container">
                         <label htmlFor="email">Email</label>
                         <Field
                             type="email"
@@ -111,7 +97,6 @@ const withFormikObj = withFormik({
     mapPropsToValues: ({
         username,
         password,
-        confirmPassword,
         email,
         city,
         zip_code,
@@ -119,7 +104,6 @@ const withFormikObj = withFormik({
     }) => ({
         username: username || "",
         password: password || "",
-        confirmPassword: confirmPassword || "",
         email: email || "",
         city: city || "",
         zip_code: zip_code || "",
@@ -135,10 +119,6 @@ const withFormikObj = withFormik({
         //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
         // ),
-        confirmPassword: yup
-            .string()
-            .oneOf([yup.ref("password"), null], `Passwords don't match`)
-            .required("Password confirmation is required"),
         email: yup
             .string()
             .email("Email is not valid")
@@ -154,7 +134,7 @@ const withFormikObj = withFormik({
             .min(2, "State must be 2 characters long")
             .required("State is required")
     }),
-    handleSubmit: (values, { props, resetForm, setSubmitting, setStatus }) => {
+    handleSubmit: (values, { props, resetForm }) => {
         console.log("submitting!", values);
         props.userSignup(values);
         props.history.push("/login");

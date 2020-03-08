@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
 import IssueCard from "../components/IssueCard/IssueCard";
 import AddNewIssue from "../components/AddNewIssue/AddNewIssue";
-import { axiosWithAuth } from "../components/utils/axiosWithAuth";
 import { connect } from "react-redux";
 import { getIssues } from "../components/actions/actionsIndex";
 
