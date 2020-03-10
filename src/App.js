@@ -10,6 +10,7 @@ import AddNewIssueForm from "./components/AddNewIssue/AddNewIssueForm";
 import { connect } from "react-redux";
 import { loggedIn } from "./components/actions/actionsIndex";
 import "./App.css";
+import Main from "./components/Main";
 
 function App(props) {
     console.log("AppJS props: ", props);
@@ -22,6 +23,7 @@ function App(props) {
     return (
         <div className="App">
             <Route path="/" component={Nav} />
+            <Route exact path="/" component={Main} />
 
             <Switch>
                 <PrivateRoute

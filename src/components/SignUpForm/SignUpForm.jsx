@@ -113,12 +113,12 @@ const withFormikObj = withFormik({
         username: yup.string().required("Username is required"),
         password: yup
             .string()
-            // .min(10, "Password must be 10 characters or longer")
-            .required("Password is required"),
-        // .matches(
-        //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        //     "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
-        // ),
+            .min(10, "Password must be 10 characters or longer")
+            .required("Password is required")
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+            ),
         email: yup
             .string()
             .email("Email is not valid")

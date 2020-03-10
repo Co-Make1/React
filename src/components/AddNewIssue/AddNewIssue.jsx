@@ -24,7 +24,7 @@ const StyledAddNewIssue = styled.div`
     max-width: 1284px;
     /* border: 1px solid black; */
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 130px;
     align-items: center;
 
     p {

@@ -13,9 +13,11 @@ const Nav = props => {
 
     return (
         <StyledNav>
-            <div className="logo">
+            <NavLink to="/" className="logo">
                 <LogoIcon />
-            </div>
+            </NavLink>
+
+
             <div className="nav-links">
                 <NavLink
                     to={
@@ -50,13 +52,12 @@ const StyledNav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10%;
+    padding: 1rem 10%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 10%;
     background-color: white;
     z-index: 999;
     .logo {
@@ -72,7 +73,7 @@ const StyledNav = styled.nav`
         a {
             text-decoration: none;
             color: #333;
-            font-size:15px;
+            font-size: 15px;
             font-weight: 600;
             position: relative;
             line-height: 3.5rem;
@@ -84,7 +85,7 @@ const StyledNav = styled.nav`
         content: "";
         width: 100%;
         height: 5px;
-        background-color: #217AFF;
+        background-color: #217aff;
         position: absolute;
         bottom: 0;
         left: 0;

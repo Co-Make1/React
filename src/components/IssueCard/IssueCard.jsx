@@ -4,6 +4,8 @@ import { deleteIssue, updateIssue } from "../actions/actionsIndex";
 import { connect } from "react-redux";
 import { ReactComponent as UpVoteIcon } from "../../assets/upvote.svg";
 import { ReactComponent as UpVotedIcon } from "../../assets/upvoted.svg";
+import { ReactComponent as EditIcon } from "../../assets/edit.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/delete.svg";
 import EditIssueForm from "../EditIssueForm/EditIssueForm";
 
 const IssueCard = props => {
@@ -83,8 +85,20 @@ const IssueCard = props => {
                         <UpVoteIcon onClick={toggleUpVote} />
                     )}
                 </div>
-                <button onClick={handleDelete}>Delete</button>
-                <button onClick={e => editingIssue(e, editIssue)}>Edit</button>
+                {editing && (
+                    <DeleteIcon
+                        onClick={handleDelete}
+                        className="icons delete"
+                    />
+                )}
+
+                {editing ? null : (
+                    <EditIcon
+                        onClick={e => editingIssue(e, editIssue)}
+                        className="icons edit"
+                    />
+                )}
+
                 {editing && (
                     <div>
                         <EditIssueForm
@@ -169,12 +183,25 @@ const StyledCard = styled.div`
             display: flex;
             justify-content: flex-end;
             bottom: 1rem;
-            right: 1.5rem;
+            right: 2rem;
             position: absolute;
 
             p {
                 margin-right: 1rem;
             }
+        }
+
+        .icons {
+            position: absolute;
+        }
+
+        .edit {
+            bottom: 1rem;
+            left: 2rem;
+        }
+        .delete {
+            bottom: 1rem;
+            left: 2rem;
         }
     }
 

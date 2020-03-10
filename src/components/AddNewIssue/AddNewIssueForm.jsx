@@ -53,7 +53,7 @@ const AddNewIssueForm = ({ errors, status, touched, ...props }) => {
                         <div className="input-container">
                             <label htmlFor="zip_code">Zip Code</label>
                             <Field
-                                type="number"
+                                type="text"
                                 name="zip_code"
                                 placeholder="type your zip-code"
                                 id="zip_code"

@@ -61,19 +61,19 @@ export const StyledLoginContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-      height: 100vh;
+    height: 100vh;
 `;
 
 export const StyledForm = styled.div`
     margin: 0 auto;
     min-width: 400px;
     min-height: 300px;
-    border: 1px ;
+    border: 1px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.1);
 
     form {
         margin: 0 auto;
@@ -128,8 +128,8 @@ export const StyledForm = styled.div`
             &:hover {
                 transform: scale(1.1);
                 transition: all 400ms cubic-bezier(0.175, 0.885, 0, 1);
-                background-color: #217AFF;
-                border:none;
+                background-color: #217aff;
+                border: none;
             }
 
             &:active {
@@ -177,10 +177,7 @@ const withFormikObj = withFormik({
         password: password || ""
     }),
     validationSchema: yup.object().shape({
-        username: yup
-            .string()
-            // .email("Email not valid")
-            .required("Username is required"),
+        username: yup.string().required("Username is required"),
         password: yup
             .string()
             // .min(10, "Password must be 10 characters or longer")
